@@ -1,9 +1,6 @@
 package dev.konstantinou.urlshortener.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import org.springframework.data.annotation.CreatedDate;
 
 import java.time.Instant;
@@ -14,7 +11,9 @@ public class Url {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @Column(unique = true, nullable = false)
     private String shortUrl;
+    @Column(unique = true, nullable = false)
     private String longUrl;
     @CreatedDate
     private Instant createdAt;
@@ -35,6 +34,11 @@ public class Url {
     public String getShortUrl() {
         return this.shortUrl;
     }
+
+    public String getFullShortUrl() {
+        String serverUrl = "http://localhost:5000/api/";
+        return serverUrl + this.shortUrl;
+    }
     public String getLongUrl() {
         return this.longUrl;
     }
@@ -52,7 +56,6 @@ public class Url {
         }
         CRC32 crc32 = new CRC32();
         crc32.update(longUrl.getBytes());
-        String serverUrl = "http://localhost:500/api/s/";
-        return serverUrl + Long.toHexString(crc32.getValue());
+        return Long.toHexString(crc32.getValue());
     }
 }
