@@ -7,6 +7,7 @@ import dev.konstantinou.urlshortener.entities.Url;
 import dev.konstantinou.urlshortener.entities.UrlStats;
 import dev.konstantinou.urlshortener.repositories.UrlRepository;
 import dev.konstantinou.urlshortener.repositories.UrlStatsRepository;
+import dev.konstantinou.urlshortener.usecases.Redirect;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.apache.catalina.connector.Response;
@@ -26,6 +27,8 @@ public class ApiController {
 
     private final UrlRepository urlRepo;
     private final UrlStatsRepository urlStatsRepo;
+
+    private final Redirect redirect;
     @PostMapping("shorten")
     public ShortUrlResponseDTO createShortUrl(@RequestBody CreateShortUrlRequestDTO dto) {
         var existingUrl = urlRepo.findByLongUrl(dto.longUrl());
@@ -38,30 +41,7 @@ public class ApiController {
 
     @GetMapping("{shortUrl}")
     public ResponseEntity<String> redirect(@PathVariable String shortUrl, HttpServletRequest request) {
-        var url = urlRepo.findByShortUrl(shortUrl);
-        if (url == null) {
-            throw new IllegalArgumentException("Given url was not found");
-        }
-        var stats = urlStatsRepo.findByUrl(url);
-        if (stats == null) {
-            UrlStats urlStats = new UrlStats();
-            urlStats.setUrl(url);
-            List<MetaData> metaDataList = new ArrayList<>();
-            var metaData = new MetaData();
-            metaData.setIpAddress(request.getRemoteAddr());
-            metaData.setTimestamp(Instant.now());
-            metaData.setBrowser("Chrome");
-            metaDataList.add(metaData);
-            urlStats.setMetaDataList(metaDataList);
-            urlStatsRepo.save(urlStats);
-        } else {
-            var metaData = new MetaData();
-            metaData.setIpAddress(request.getRemoteAddr());
-            metaData.setTimestamp(Instant.now());
-            metaData.setBrowser("Chrome");
-            stats.getMetaDataList().add(metaData);
-            urlStatsRepo.save(stats);
-        }
+        var url = redirect.command(shortUrl, request.getRemoteAddr());
         HttpHeaders headers = new HttpHeaders();
         headers.set("Location", url.getLongUrl());
         return ResponseEntity.status(Response.SC_MOVED_PERMANENTLY).headers(headers).build();

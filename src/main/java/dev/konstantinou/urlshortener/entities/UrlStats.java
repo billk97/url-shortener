@@ -9,7 +9,9 @@ import lombok.Setter;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 
@@ -27,6 +29,8 @@ public class UrlStats {
 
     @OneToMany
     @Cascade(CascadeType.ALL)
-    private List<MetaData> metaDataList;
+    private Set<MetaData> metaDataList;
+
+
 
 }

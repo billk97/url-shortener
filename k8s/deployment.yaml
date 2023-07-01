@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: url-web
+  labels:
+    app: url-web
+spec:
+  replicas: 1 # specifies how many pods to run
+  selector:
+    matchLabels:
+      app: url-web
+  strategy:
+    type: RollingUpdate # specifies the deployment strategy Rolling Update means that new versions are deployed gradualy
+  template:
+    metadata:
+      labels:
+        app: url-web
+    spec:
+      containers: # this specifies which container image to run
+        - name: url-shortener
+          image: unipasssbackend/url-shortener
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            httpGet:
+              path: /api/health
+              port: 5000
+            initialDelaySeconds: 3
+            periodSeconds: 3
+          ports:
+            - containerPort: 5000

@@ -4,6 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.servlet.http.PushBuilder;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,5 +26,10 @@ public class MetaData {
     private Instant timestamp;
     private String browser;
 
+    public MetaData(String ipAddress, Instant timestamp, String browser) {
+        this.ipAddress = ipAddress;
+        this.timestamp = timestamp;
+        this.browser = browser;
+    }
 
 }
