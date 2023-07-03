@@ -32,6 +32,11 @@ public class UrlStats {
     @Cascade(CascadeType.ALL)
     private Set<MetaData> metaDataList;
 
+    public UrlStats(Url url, Set<MetaData> metaDataList) {
+        this.url = url;
+        this.metaDataList = metaDataList;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
