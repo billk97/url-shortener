@@ -1,12 +1,14 @@
 package dev.konstantinou.urlshortener.entities;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 
 import java.time.Instant;
 import java.util.zip.CRC32;
 
 @Entity
+@AllArgsConstructor
 public class Url {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

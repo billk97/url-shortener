@@ -11,6 +11,7 @@ import org.hibernate.annotations.CascadeType;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -31,6 +32,16 @@ public class UrlStats {
     @Cascade(CascadeType.ALL)
     private Set<MetaData> metaDataList;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        UrlStats urlStats = (UrlStats) o;
+        return id == urlStats.id;
+    }
 
-
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 }
