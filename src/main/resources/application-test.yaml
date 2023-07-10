@@ -12,3 +12,8 @@ spring:
     password: sa
   flyway:
     enabled: false
+
+
+secrets:
+  publicKey: "secret"
+  privateKey: "secret"
