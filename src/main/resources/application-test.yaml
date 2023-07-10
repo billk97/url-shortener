@@ -13,6 +13,10 @@ spring:
   flyway:
     enabled: false
 
+server:
+  api-prefix: /api
+  http2:
+    enabled: true
 
 secrets:
   publicKey: "secret"
