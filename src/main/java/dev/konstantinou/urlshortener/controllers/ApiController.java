@@ -31,6 +31,7 @@ public class ApiController {
     private final Redirect redirect;
     @PostMapping("shorten")
     public ShortUrlResponseDTO createShortUrl(@RequestBody CreateShortUrlRequestDTO dto) {
+        // todo fix bug with string bigger than 255
         var existingUrl = urlRepo.findByLongUrl(dto.longUrl());
         if (existingUrl != null) {
             return new ShortUrlResponseDTO(existingUrl.getFullShortUrl(), existingUrl.getLongUrl());
