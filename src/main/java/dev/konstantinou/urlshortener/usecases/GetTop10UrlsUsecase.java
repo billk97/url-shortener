@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.time.Instant;
+import java.time.OffsetDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -21,8 +22,8 @@ public class GetTop10UrlsUsecase {
         List<Object[]> stats = urlStatsRepo.getTop10Urls();
         response = stats
                 .stream().
-                map(s -> new TopTenDTO(new Url(((Integer) s[0]), (String) s[1], (String) s[2], (Instant) s[3]) , ((Long) s[4])))
-                .collect(Collectors.toSet());;
+                map(s -> new TopTenDTO(new Url(((Integer) s[0]), (String) s[1], (String) s[2], ((OffsetDateTime) s[3]).toInstant()), ((Long) s[4])))
+                .collect(Collectors.toSet());
         return response;
     }
 }

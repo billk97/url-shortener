@@ -42,7 +42,6 @@ class GetTop10UrlsUsecaseTests {
         metadataList.add(new MetaData("IP", Instant.now(), "Chrome"));
         var stats = new UrlStats(urlOne, metadataList);
         urlStatsRepo.save(stats);
-
         getTop10UrlsUsecase = new GetTop10UrlsUsecase(urlStatsRepo);
     }
 

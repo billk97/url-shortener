@@ -55,7 +55,7 @@ public class ApplicationUser implements UserDetails {
         this.password = Argon2PasswordEncoder.defaultsForSpringSecurity_v5_8().encode(password);
     }
 
-    private ApplicationUser createNewApplicationUser(String username, String password) {
+    public static ApplicationUser CreateNewApplicationUser(String username, String password) {
         ApplicationUser u = new ApplicationUser(username, password);
         u.username = username;
         u.password = Argon2PasswordEncoder.defaultsForSpringSecurity_v5_8().encode(password);

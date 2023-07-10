@@ -16,7 +16,8 @@ public class CreateAdminUser {
        if (existingUser.isPresent()) {
            throw new IllegalArgumentException("User already exist");
        }
-       ApplicationUser newUser = new ApplicationUser(userCredentials.username(), userCredentials.password());
+
+       ApplicationUser newUser = ApplicationUser.CreateNewApplicationUser (userCredentials.username(), userCredentials.password());
        return applicationUserRepo.save(newUser);
 
     }

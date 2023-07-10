@@ -6,6 +6,7 @@ import dev.konstantinou.urlshortener.repositories.ApplicationUserRepository;
 import dev.konstantinou.urlshortener.utils.JwtUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -24,7 +25,7 @@ public class Login {
 
     public AuthToken command(UserCredentials userCredentials) {
         if (!applicationUserRepo.findApplicationUserByUsername(userCredentials.username()).isPresent()) {
-            throw new IllegalArgumentException("Invalid credentials");
+            throw new BadCredentialsException("Invalid credentials");
         }
         Authentication authentication =
                 authenticationManager.authenticate(
