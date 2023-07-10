@@ -39,7 +39,12 @@ public class Url {
         return this.shortUrl;
     }
 
+    public int getId() {
+        return this.id;
+    }
+
     public String getFullShortUrl() {
+        //todo this needs to be populated from the application.yaml
         String serverUrl = "http://localhost:5000/api/";
         return serverUrl + this.shortUrl;
     }

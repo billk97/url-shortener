@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
+import org.hibernate.annotations.Fetch;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,13 +29,18 @@ public class UrlStats {
     @OneToOne
     private Url url;
 
-    @OneToMany
+    @OneToMany()
     @Cascade(CascadeType.ALL)
     private Set<MetaData> metaDataList;
 
     public UrlStats(Url url, Set<MetaData> metaDataList) {
         this.url = url;
         this.metaDataList = metaDataList;
+    }
+
+
+    public void addMetaData(MetaData md) {
+        this.metaDataList.add(md);
     }
 
     @Override

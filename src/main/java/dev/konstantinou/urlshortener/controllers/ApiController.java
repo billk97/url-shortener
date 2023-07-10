@@ -14,6 +14,7 @@ import org.apache.catalina.connector.Response;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.Instant;
@@ -23,10 +24,10 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("${server.api-prefix}/")
+@EnableAsync
 public class ApiController {
 
     private final UrlRepository urlRepo;
-    private final UrlStatsRepository urlStatsRepo;
 
     private final Redirect redirect;
     @PostMapping("shorten")
